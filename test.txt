@@ -1,0 +1,4 @@
+{"name":"Havana","sizeof":"large","economy":[{"iron":25},{"sugar":20},{"cotton":15}],"route":[1,2]}
+{"name":"Barbados","sizeof":"large","economy":[{"iron":15},{"sugar":50},{"cotton":50}],"route":[0,2]}
+{"name":"Port Royal","sizeof":"large","economy":[{"iron":50},{"sugar":25},{"cotton":50}],"route":[0,1]}
+
