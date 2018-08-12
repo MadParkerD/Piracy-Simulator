@@ -93,6 +93,7 @@ pub mod start_econ {
                 goods::iron(val) => val + 0,
             }
         }
+        //I hate myself for implimenting this but boy does it ever work
         pub fn swap(&self, tofill: &mut Vec<goods>, index: usize, vax: u64) {
             tofill.remove(index);
 
@@ -123,7 +124,7 @@ pub mod start_econ {
                             v = &self.economy[j].getVal() + (i.getVal() / 5);
                             i.swap(&mut self.economy, j, v);
                         } else {
-                            v = &self.economy[j].getVal() + (i.getVal() / 5);
+                            v = &self.economy[j].getVal() - (i.getVal() / 5);
                             i.swap(&mut self.economy, j, v);
                         }
                         println!(
