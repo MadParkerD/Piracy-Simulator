@@ -15,7 +15,7 @@ pub mod start_econ {
         small,
     }
 
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Debug, Serialize, Deserialize, Clone, Copy)]
     pub enum goods {
         sugar(u64),
         ice(u64),
@@ -109,7 +109,10 @@ pub mod start_econ {
     }
 
     impl port {
-        pub fn update(&mut self, manifest: &mut [goods], buy: bool) {
+        pub fn update(&mut self, manifest: &mut [goods], buy: bool) -> u64 {
+            let mut mcopy: Vec<goods> = vec![goods::sugar(1); manifest.len()];
+            mcopy.clone_from_slice(manifest);
+
             for i in manifest {
                 for j in 0..self.economy.len() - 1 {
                     if i.same(&self.economy[j]) {
@@ -119,12 +122,16 @@ pub mod start_econ {
                             &self.economy[j],
                             i.same(&self.economy[j])
                         );
-                        let v;
+                        let mut v;
                         if buy {
-                            v = &self.economy[j].getVal() + (i.getVal() / 5);
+                            //inflation occurs because prices keep going up
+                            v = &self.economy[j].getVal() + (i.getVal() / 5) + 1;
                             i.swap(&mut self.economy, j, v);
                         } else {
                             v = &self.economy[j].getVal() - (i.getVal() / 5);
+                            if v < 0 || v == 0 {
+                                v = 1;
+                            }
                             i.swap(&mut self.economy, j, v);
                         }
                         println!(
@@ -135,6 +142,62 @@ pub mod start_econ {
                         );
                     }
                 }
+            }
+            let mut total = 0;
+            if buy {
+                for i in mcopy {
+                    total = total + i.getVal() * match i {
+                        goods::sugar(val) => val + 0,
+                        goods::ice(val) => val + 0,
+                        goods::cotton(val) => val + 0,
+                        goods::gold(val) => val + 0,
+                        goods::iron(val) => val + 0,
+                    };
+                }
+            } else {
+                for i in mcopy {
+                    total = total + i.getVal() * match i {
+                        goods::sugar(val) => val + 0,
+                        goods::ice(val) => val + 0,
+                        goods::cotton(val) => val + 0,
+                        goods::gold(val) => val + 0,
+                        goods::iron(val) => val + 0,
+                    };
+                }
+            }
+            total
+        }
+        pub fn getmax(&self) -> goods {
+            let mut max = goods::cotton(0);
+            for i in &self.economy {
+                let x = i.getVal();
+                if x > max.getVal() {
+                    max = i.clone();
+                }
+            }
+            max
+        }
+        pub fn buy_menu(&self, capacity: usize) {
+            let x = 0;
+            for i in &place.economy {
+                x = x + 1;
+                println!("{}: {:?}", x, i);
+            }
+            for i in &place.economy {
+                println!("How many {:?}", i);
+                let mut s = String::new();
+                print!("Which port to visit?: ");
+                let _ = stdout().flush();
+                stdin()
+                    .read_line(&mut s)
+                    .expect("Did not enter a correct string");
+                if let Some('\n') = s.chars().next_back() {
+                    s.pop();
+                }
+                if let Some('\r') = s.chars().next_back() {
+                    s.pop();
+                }
+                let x: usize = s.parse().unwrap();
             }
         }
     }
