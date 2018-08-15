@@ -1,4 +1,4 @@
-# Age of Sail
+# Piracy Simulator
 
 This project does basic simulation of the economy during the age of sail.
 
