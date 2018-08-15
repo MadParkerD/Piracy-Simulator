@@ -112,7 +112,6 @@ pub enum wound {
     eye(u64),
 }
 #[derive(Debug, Serialize, Deserialize, FromPrimitive, Clone, Copy)]
-#[repr(u64)]
 pub enum btype {
     large = 100,
     medium = 50,

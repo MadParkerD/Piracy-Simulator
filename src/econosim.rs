@@ -107,7 +107,7 @@ pub mod start_econ {
                 goods::iron(val) => val + 0,
             }
         }
-        //I hate myself for implimenting this but boy does it ever work
+        //I hate myself for implementing this but boy does it ever work
         //Basically an unsafe swap_remove() macro to replace an enum in a vec
         pub fn swap(&self, tofill: &mut Vec<goods>, index: usize, vax: u64) {
             let x = match &self {
